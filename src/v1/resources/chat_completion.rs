@@ -1,8 +1,8 @@
 use std::fmt::Display;
 
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserialize, Serialize};
 
-use crate::v1::models::PplxModel;
+use crate::v1::models::PplxChatModel;
 use crate::v1::resources::shared::{FinishReason, Usage};
 
 #[derive(Serialize, Debug, Clone)]
@@ -14,7 +14,7 @@ pub struct SimpleChatCompletionParameters {
 
 #[derive(Serialize, Debug, Clone)]
 pub struct ChatCompletionParameters {
-    pub model: PplxModel,
+    pub model: PplxChatModel,
     pub messages: Vec<ChatMessage>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_tokens: Option<u32>,
@@ -33,12 +33,11 @@ pub struct ChatCompletionParameters {
 impl Default for ChatCompletionParameters {
     fn default() -> Self {
         ChatCompletionParameters {
-            model: PplxModel::Mistral7bInstruct,
+            model: PplxChatModel::Mistral7bInstruct,
             messages: vec![ChatMessage {
                 role: Role::User,
                 content: "Hello!".to_string(),
                 name: None,
-                function_call: None,
             }],
             temperature: None,
             top_p: None,
@@ -53,12 +52,9 @@ impl Default for ChatCompletionParameters {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ChatMessage {
     pub role: Role,
-    #[serde(deserialize_with = "null_to_default")]
     pub content: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub function_call: Option<FunctionCall>,
 }
 
 impl Default for ChatMessage {
@@ -67,7 +63,6 @@ impl Default for ChatMessage {
             role: Role::User,
             content: "".to_string(),
             name: None,
-            function_call: None,
         }
     }
 }
@@ -118,91 +113,7 @@ impl std::str::FromStr for Role {
             "system" => Ok(Role::System),
             "user" => Ok(Role::User),
             "assistant" => Ok(Role::Assistant),
-            "function" => Ok(Role::Function),
             _ => Err(format!("{} is not a valid Role", s)),
         }
     }
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Function {
-    /// Function name
-    pub name: String,
-
-    /// Description of the function.
-    ///
-    /// Providing a good description lets the model know what the function does.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub description: Option<String>,
-
-    /// JSONSchema representation of function parameters as a JSON value
-    ///
-    /// For simple functions, this can be constructed manually. For more complex use-cases, the [schemars](https://docs.rs/schemars) crate is recommended.
-    ///
-    /// Resources:
-    ///   - <https://platform.openai.com/docs/guides/gpt/function-calling>
-    ///   - JSONSchema: <https://json-schema.org/> for more information.
-    pub parameters: serde_json::Value,
-}
-
-#[derive(Serialize, Debug, Clone)]
-#[serde(rename_all = "lowercase")]
-pub enum FunctionCallConfig {
-    /// Do not call any functions
-    None,
-    /// The model decides whether to call functions or not
-    Auto,
-    // TODO: The model must call this function
-    //       Unsure how to get this to serialize properly
-    // Force(ForceFunctionCall)
-}
-
-#[derive(Serialize, Debug, Clone)]
-
-pub struct ForceFunctionCall {
-    pub name: String,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
-pub struct FunctionCall {
-    /// Name of the function to call
-    #[serde(default)]
-    pub name: String,
-
-    /// JSON encoded arguments
-    #[serde(default)]
-    pub arguments: String,
-}
-
-impl FunctionCall {
-    /// Merge one function call into another
-    ///
-    /// This is useful when streaming a chat-completion that might call a
-    /// function. Like message content, function calls are also streamed.
-    /// When you see a function call, you should merge it into the previous
-    /// function call in the stream until you see a `finish_reason` of
-    /// `FunctionCall`. At that point the fully merged FunctionCall is ready to
-    /// be serviced.
-    pub fn merge(&mut self, other: &Self) {
-        if self.name.is_empty() && !other.name.is_empty() {
-            self.name = other.name.clone();
-        }
-        if !other.arguments.is_empty() {
-            self.arguments.push_str(&other.arguments);
-        }
-    }
-
-    /// Check if the function call is empty
-    pub fn is_empty(&self) -> bool {
-        self.name.is_empty() && self.arguments.is_empty()
-    }
-}
-
-fn null_to_default<'de, D, T>(de: D) -> Result<T, D::Error>
-where
-    D: Deserializer<'de>,
-    T: Default + Deserialize<'de>,
-{
-    let key = Option::<T>::deserialize(de)?;
-    Ok(key.unwrap_or_default())
 }

@@ -6,7 +6,7 @@ use serde_json::Value;
 
 use crate::v1::api::Client;
 use crate::v1::error::APIError;
-use crate::v1::models::PplxModel;
+use crate::v1::models::PplxChatModel;
 use crate::v1::resources::chat_completion::{
     ChatCompletionParameters, ChatCompletionResponse, ChatMessage,
 };
@@ -64,7 +64,7 @@ impl Chat<'_> {
 
 #[derive(Serialize, Debug)]
 struct ChatCompletionStreamParameters {
-    pub model: PplxModel,
+    pub model: PplxChatModel,
     pub messages: Vec<ChatMessage>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_tokens: Option<u32>,

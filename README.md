@@ -182,16 +182,16 @@ let client = Client {
 [https://docs.perplexity.ai/docs/model-cards](https://docs.perplexity.ai/docs/model-cards)
 
 ```rust
-use pplx_client::v1::models::PplxModel;
+use pplx_client::v1::models::PplxChatModel;
 
-assert_eq!(PplxModel::Codellama34bInstruct.to_string(), "codellama-34b-instruct");
-assert_eq!(PplxModel::Llama213bChat.to_string(), "llama-2-13b-chat");
-assert_eq!(PplxModel::Llama270bChat.to_string(), "llama-2-70b-chat");
-assert_eq!(PplxModel::Mistral7bInstruct.to_string(), "mistral-7b-instruct");
-assert_eq!(PplxModel::Openhermes2Mistral7b.to_string(), "openhermes-2-mistral-7b");
-assert_eq!(PplxModel::Openhermes25Mistral7b.to_string(), "openhermes-2.5-mistral-7b");
-assert_eq!(PplxModel::Pplx7bChatAlpha.to_string(), "pplx-7b-chat-alpha");
-assert_eq!(PplxModel::Pplx70bChatAlpha.to_string(), "pplx-70b-chat-alpha");
+assert_eq!(PplxChatModel::Codellama34bInstruct.to_string(), "codellama-34b-instruct");
+assert_eq!(PplxChatModel::Llama213bChat.to_string(), "llama-2-13b-chat");
+assert_eq!(PplxChatModel::Llama270bChat.to_string(), "llama-2-70b-chat");
+assert_eq!(PplxChatModel::Mistral7bInstruct.to_string(), "mistral-7b-instruct");
+assert_eq!(PplxChatModel::Openhermes2Mistral7b.to_string(), "openhermes-2-mistral-7b");
+assert_eq!(PplxChatModel::Openhermes25Mistral7b.to_string(), "openhermes-2.5-mistral-7b");
+assert_eq!(PplxChatModel::Pplx7bChatAlpha.to_string(), "pplx-7b-chat-alpha");
+assert_eq!(PplxChatModel::Pplx70bChatAlpha.to_string(), "pplx-70b-chat-alpha");
 ```
 
 ## Contributions

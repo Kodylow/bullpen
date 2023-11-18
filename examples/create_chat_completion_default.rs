@@ -2,7 +2,7 @@ use std::env;
 
 use dotenv::dotenv;
 use pplx_client::v1::api::Client;
-use pplx_client::v1::models::PplxModel;
+use pplx_client::v1::models::PplxChatModel;
 use pplx_client::v1::resources::chat_completion::{ChatCompletionParameters, ChatMessage, Role};
 
 #[tokio::main]
@@ -13,7 +13,7 @@ async fn main() {
     let client = Client::new(api_key);
 
     let parameters = ChatCompletionParameters {
-        model: PplxModel::Mistral7bInstruct,
+        model: PplxChatModel::Mistral7bInstruct,
         messages: vec![
             ChatMessage {
                 role: Role::User,

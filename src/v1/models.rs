@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 // https://api.perplexity.ai
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
-pub enum PplxModel {
+pub enum PplxChatModel {
     #[serde(rename = "mistral-7b-instruct")]
     Mistral7bInstruct,
     #[serde(rename = "codellama-34b-instruct")]
@@ -23,7 +23,19 @@ pub enum PplxModel {
     Pplx70bChatAlpha,
 }
 
-impl Display for PplxModel {
+impl Display for PplxChatModel {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        write!(f, "{}", serde_json::to_string(self).map_err(|_| Error)?)
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub enum PplxCompletionModel {
+    #[serde(rename = "replit-code-v1.5-3b")]
+    ReplitCodeV15_3b,
+}
+
+impl Display for PplxCompletionModel {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         write!(f, "{}", serde_json::to_string(self).map_err(|_| Error)?)
     }

@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::pin::Pin;
 
 use futures::Stream;
@@ -7,11 +6,9 @@ use serde_json::Value;
 
 use crate::v1::api::Client;
 use crate::v1::error::APIError;
-#[cfg(feature = "simple")]
-use crate::v1::resources::completion::SimpleCompletionParameters;
+use crate::v1::models::PplxCompletionModel;
 use crate::v1::resources::completion::{CompletionParameters, CompletionResponse};
 use crate::v1::resources::completion_stream::CompletionStreamResponse;
-use crate::v1::resources::shared::StopToken;
 pub struct Completions<'a> {
     pub client: &'a Client,
 }
@@ -60,19 +57,13 @@ impl Completions<'_> {
         let stream_parameters = CompletionStreamParameters {
             model: parameters.model,
             prompt: parameters.prompt,
-            suffix: None,
             max_tokens: Some(50),
             temperature: parameters.temperature,
             top_p: parameters.top_p,
-            n: parameters.n,
-            stream: true,
-            logprobs: parameters.logprobs,
-            echo: parameters.echo,
-            stop: parameters.stop,
+            top_k: parameters.top_k,
+            stream: Some(true),
             presence_penalty: parameters.presence_penalty,
             frequency_penalty: parameters.frequency_penalty,
-            best_of: parameters.best_of,
-            logit_bias: parameters.logit_bias,
         };
 
         Ok(self
@@ -84,10 +75,8 @@ impl Completions<'_> {
 
 #[derive(Serialize, Debug)]
 struct CompletionStreamParameters {
-    model: String,
-    prompt: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub suffix: Option<String>,
+    pub model: PplxCompletionModel,
+    pub prompt: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_tokens: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -95,20 +84,10 @@ struct CompletionStreamParameters {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub top_p: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub n: Option<u32>,
-    pub stream: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub logprobs: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub echo: Option<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub stop: Option<StopToken>,
+    pub top_k: Option<u32>,
+    pub stream: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub presence_penalty: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub frequency_penalty: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub best_of: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub logit_bias: Option<HashMap<String, serde_json::Value>>,
 }

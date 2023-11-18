@@ -1,10 +1,8 @@
-use std::collections::HashMap;
-
 use serde::{Deserialize, Serialize};
 
-use crate::v1::resources::shared::{FinishReason, StopToken, Usage};
+use crate::v1::models::PplxCompletionModel;
+use crate::v1::resources::shared::{FinishReason, Usage};
 
-#[cfg(feature = "simple")]
 #[derive(Serialize, Debug, Clone)]
 pub struct SimpleCompletionParameters {
     pub model: String,
@@ -16,10 +14,8 @@ pub struct SimpleCompletionParameters {
 
 #[derive(Serialize, Debug, Clone)]
 pub struct CompletionParameters {
-    pub model: String,
+    pub model: PplxCompletionModel,
     pub prompt: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub suffix: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_tokens: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -27,43 +23,24 @@ pub struct CompletionParameters {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub top_p: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub n: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub logprobs: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub echo: Option<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub stop: Option<StopToken>,
+    pub top_k: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub presence_penalty: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub frequency_penalty: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub best_of: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub logit_bias: Option<HashMap<String, serde_json::Value>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub user: Option<String>,
 }
 
 impl Default for CompletionParameters {
     fn default() -> Self {
         CompletionParameters {
-            model: "text-davinci-003".to_string(),
-            prompt: "Say this is a test".to_string(),
-            suffix: None,
-            max_tokens: None,
+            model: PplxCompletionModel::ReplitCodeV15_3b,
+            prompt: "Some example like...".to_string(),
             temperature: None,
             top_p: None,
-            n: None,
-            logprobs: None,
-            echo: None,
-            stop: None,
+            top_k: None,
+            max_tokens: None,
             presence_penalty: None,
             frequency_penalty: None,
-            best_of: None,
-            logit_bias: None,
-            user: None,
         }
     }
 }
