@@ -91,7 +91,7 @@ async fn main() {
     let client = Client::new(api_key);
 
     let parameters = ChatCompletionParameters {
-        model: "gpt-3.5-turbo-0301".to_string(),
+        model: "mistral-7b-instruct".to_string(),
         messages: vec![
             ChatMessage {
                 role: Role::User,

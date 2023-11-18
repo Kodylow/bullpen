@@ -4,7 +4,6 @@ use serde::{Deserialize, Serialize};
 
 use crate::v1::resources::shared::{FinishReason, StopToken, Usage};
 
-#[deprecated(since = "0.2.8")]
 #[cfg(feature = "simple")]
 #[derive(Serialize, Debug, Clone)]
 pub struct SimpleCompletionParameters {

@@ -1,11 +1,7 @@
-#[cfg(feature = "stream")]
 use std::collections::HashMap;
-#[cfg(feature = "stream")]
 use std::pin::Pin;
 
-#[cfg(feature = "stream")]
 use futures::Stream;
-#[cfg(feature = "stream")]
 use serde::Serialize;
 use serde_json::Value;
 
@@ -14,27 +10,19 @@ use crate::v1::error::APIError;
 #[cfg(feature = "simple")]
 use crate::v1::resources::completion::SimpleCompletionParameters;
 use crate::v1::resources::completion::{CompletionParameters, CompletionResponse};
-#[cfg(feature = "stream")]
 use crate::v1::resources::completion_stream::CompletionStreamResponse;
-#[cfg(feature = "stream")]
 use crate::v1::resources::shared::StopToken;
-
-#[deprecated(since = "0.2.12")]
 pub struct Completions<'a> {
     pub client: &'a Client,
 }
 
 impl Client {
-    #[allow(deprecated)]
-    #[deprecated(since = "0.2.12")]
     pub fn completions(&self) -> Completions {
         Completions { client: self }
     }
 }
 
-#[allow(deprecated)]
 impl Completions<'_> {
-    #[deprecated(since = "0.2.12")]
     pub async fn create(
         &self,
         parameters: CompletionParameters,
@@ -48,7 +36,6 @@ impl Completions<'_> {
         Ok(completion_response)
     }
 
-    #[deprecated(since = "0.2.8")]
     #[cfg(feature = "simple")]
     pub async fn create_simple(
         &self,
@@ -63,8 +50,6 @@ impl Completions<'_> {
         Ok(completion_response)
     }
 
-    #[deprecated(since = "0.2.12")]
-    #[cfg(feature = "stream")]
     pub async fn create_stream(
         &self,
         parameters: CompletionParameters,
@@ -97,7 +82,6 @@ impl Completions<'_> {
     }
 }
 
-#[cfg(feature = "stream")]
 #[derive(Serialize, Debug)]
 struct CompletionStreamParameters {
     model: String,

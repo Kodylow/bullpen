@@ -1,12 +1,9 @@
-#[cfg(feature = "stream")]
 use std::pin::Pin;
 
-#[cfg(feature = "stream")]
-use futures::{stream::StreamExt, Stream};
+use futures::stream::StreamExt;
+use futures::Stream;
 use reqwest::multipart::{Form, Part};
-#[cfg(feature = "stream")]
 use reqwest_eventsource::{Event, EventSource, RequestBuilderExt};
-#[cfg(feature = "stream")]
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use tokio::fs::File;
@@ -119,7 +116,6 @@ impl Client {
         Ok(response.text().await.unwrap())
     }
 
-    #[cfg(feature = "stream")]
     pub async fn post_stream<I, O>(
         &self,
         path: &str,
@@ -143,7 +139,6 @@ impl Client {
         Client::process_stream::<O>(event_source).await
     }
 
-    #[cfg(feature = "stream")]
     pub async fn process_stream<O>(
         mut event_source: EventSource,
     ) -> Pin<Box<dyn Stream<Item = Result<O, APIError>> + Send>>
@@ -162,8 +157,8 @@ impl Client {
             message: String,
             #[serde(rename = "type")]
             error_type: String,
-            param: Option<serde_json::Value>,
-            code: Option<u8>,
+            _param: Option<serde_json::Value>,
+            _code: Option<u8>,
         }
 
         tokio::spawn(async move {

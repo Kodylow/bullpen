@@ -1,16 +1,19 @@
 use std::env;
 
+use dotenv::dotenv;
 use pplx_client::v1::api::Client;
+use pplx_client::v1::models::PplxModel;
 use pplx_client::v1::resources::chat_completion::{ChatCompletionParameters, ChatMessage, Role};
 
 #[tokio::main]
 async fn main() {
+    dotenv().ok();
     let api_key = env::var("PPLX_API_KEY").expect("$PPLX_API_KEY is not set");
 
     let client = Client::new(api_key);
 
     let parameters = ChatCompletionParameters {
-        model: "gpt-3.5-turbo-0613".to_string(),
+        model: PplxModel::Mistral7bInstruct,
         messages: vec![
             ChatMessage {
                 role: Role::User,

@@ -1,13 +1,10 @@
-use std::collections::HashMap;
 use std::fmt::Display;
 
 use serde::{Deserialize, Deserializer, Serialize};
 
 use crate::v1::models::PplxModel;
-use crate::v1::resources::shared::{FinishReason, StopToken, Usage};
+use crate::v1::resources::shared::{FinishReason, Usage};
 
-#[deprecated(since = "0.2.8")]
-#[cfg(feature = "simple")]
 #[derive(Serialize, Debug, Clone)]
 pub struct SimpleChatCompletionParameters {
     pub model: String,
@@ -17,36 +14,26 @@ pub struct SimpleChatCompletionParameters {
 
 #[derive(Serialize, Debug, Clone)]
 pub struct ChatCompletionParameters {
-    pub model: String,
+    pub model: PplxModel,
     pub messages: Vec<ChatMessage>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub max_tokens: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub temperature: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub top_p: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub n: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub stop: Option<StopToken>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub max_tokens: Option<u32>,
+    pub top_k: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub presence_penalty: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub frequency_penalty: Option<f32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub logit_bias: Option<HashMap<String, serde_json::Value>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub user: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub functions: Option<Vec<Function>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub function_call: Option<FunctionCallConfig>,
 }
 
 impl Default for ChatCompletionParameters {
     fn default() -> Self {
         ChatCompletionParameters {
-            model: PplxModel::Gpt3_5Turbo0613.to_string(),
+            model: PplxModel::Mistral7bInstruct,
             messages: vec![ChatMessage {
                 role: Role::User,
                 content: "Hello!".to_string(),
@@ -55,15 +42,10 @@ impl Default for ChatCompletionParameters {
             }],
             temperature: None,
             top_p: None,
-            n: None,
-            stop: None,
+            top_k: None,
             max_tokens: None,
             presence_penalty: None,
             frequency_penalty: None,
-            logit_bias: None,
-            user: None,
-            functions: None,
-            function_call: None,
         }
     }
 }
