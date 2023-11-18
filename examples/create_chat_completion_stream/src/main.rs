@@ -1,11 +1,12 @@
-use futures::StreamExt;
-use openai_dive::v1::api::Client;
-use openai_dive::v1::resources::chat_completion::{ChatCompletionParameters, ChatMessage, Role};
 use std::env;
+
+use futures::StreamExt;
+use pplx_client::v1::api::Client;
+use pplx_client::v1::resources::chat_completion::{ChatCompletionParameters, ChatMessage, Role};
 
 #[tokio::main]
 async fn main() {
-    let api_key = env::var("OPENAI_API_KEY").expect("$OPENAI_API_KEY is not set");
+    let api_key = env::var("PPLX_API_KEY").expect("$PPLX_API_KEY is not set");
 
     let client = Client::new(api_key);
 

@@ -517,23 +517,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b7e5500299e16ebb147ae15a00a942af264cf3688f47923b8fc2cd5858f23ad3"
 
 [[package]]
-name = "openai_dive"
-version = "0.2.13"
-dependencies = [
- "base64",
- "futures",
- "log",
- "rand",
- "reqwest",
- "reqwest-eventsource",
- "serde",
- "serde_json",
- "tokio",
- "tokio-stream",
- "tokio-util",
-]
-
-[[package]]
 name = "openssl"
 version = "0.10.45"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -601,6 +584,23 @@ name = "pkg-config"
 version = "0.3.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6ac9a59f73473f1b8d852421e59e64809f025994837ef743615c6d0c5b305160"
+
+[[package]]
+name = "pplx_client"
+version = "0.2.13"
+dependencies = [
+ "base64",
+ "futures",
+ "log",
+ "rand",
+ "reqwest",
+ "reqwest-eventsource",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tokio-stream",
+ "tokio-util",
+]
 
 [[package]]
 name = "ppv-lite86"
@@ -712,9 +712,9 @@ dependencies = [
 
 [[package]]
 name = "reqwest-eventsource"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8f03f570355882dd8d15acc3a313841e6e90eddbc76a93c748fd82cc13ba9f51"
+checksum = "f529a5ff327743addc322af460761dff5b50e0c826b9e6ac44c3195c50bb2026"
 dependencies = [
  "eventsource-stream",
  "futures-core",

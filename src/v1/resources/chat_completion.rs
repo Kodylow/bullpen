@@ -3,7 +3,7 @@ use std::fmt::Display;
 
 use serde::{Deserialize, Deserializer, Serialize};
 
-use crate::v1::models::OpenAIModel;
+use crate::v1::models::PplxModel;
 use crate::v1::resources::shared::{FinishReason, StopToken, Usage};
 
 #[deprecated(since = "0.2.8")]
@@ -46,7 +46,7 @@ pub struct ChatCompletionParameters {
 impl Default for ChatCompletionParameters {
     fn default() -> Self {
         ChatCompletionParameters {
-            model: OpenAIModel::Gpt3_5Turbo0613.to_string(),
+            model: PplxModel::Gpt3_5Turbo0613.to_string(),
             messages: vec![ChatMessage {
                 role: Role::User,
                 content: "Hello!".to_string(),
