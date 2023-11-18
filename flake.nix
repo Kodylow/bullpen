@@ -40,7 +40,11 @@
       in {
         devShells = flakeboxLib.mkShells {
           packages = [ ];
-          buildInputs = [ nixpkgs.starship ];
+          buildInputs = [
+            nixpkgs.starship
+            nixpkgs.darwin.apple_sdk.frameworks.SystemConfiguration
+            nixpkgs.pkg-config
+          ];
           shellHook = ''
             eval "$(starship init bash)"
           '';
