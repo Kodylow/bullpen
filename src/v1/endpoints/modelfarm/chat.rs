@@ -14,6 +14,7 @@ impl Modelfarm {
         modelfarm_params: ModelfarmChatCompletionRequest,
     ) -> Result<ModelfarmChatCompletionResponse, APIError> {
         let endpoint = "/v1beta/chat";
+        println!("Sending request to {}", endpoint);
         let response = self.post(endpoint, &modelfarm_params).await?;
         let chat_completion_response: ModelfarmChatCompletionResponse =
             serde_json::from_str(&response).unwrap();

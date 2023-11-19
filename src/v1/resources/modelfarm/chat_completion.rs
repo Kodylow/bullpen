@@ -28,6 +28,7 @@ pub struct ChatSession {
 pub struct ModelfarmChatParameters {
     pub prompts: Vec<ChatSession>,
     pub temperature: f64,
+    #[serde(rename = "maxOutputTokens")]
     pub max_output_tokens: usize,
 }
 
