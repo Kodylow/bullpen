@@ -1,5 +1,5 @@
 [package]
-name = "pplx_client"
+name = "bullpen"
 version = "0.2.13"
 edition = "2021"
 license = "MIT"

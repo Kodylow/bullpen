@@ -1,6 +1,6 @@
-use pplx_client::v1::api::Modelfarm;
-use pplx_client::v1::models::ModelfarmChatModel;
-use pplx_client::v1::resources::modelfarm::chat_completion::{
+use bullpen::v1::api::Modelfarm;
+use bullpen::v1::models::ModelfarmChatModel;
+use bullpen::v1::resources::modelfarm::chat_completion::{
     ChatExample, ChatMessage, ChatSession, ModelfarmChatCompletionRequest, ModelfarmChatParameters,
 };
 

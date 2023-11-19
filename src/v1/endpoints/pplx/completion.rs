@@ -4,13 +4,13 @@ use futures::Stream;
 
 use crate::v1::api::Pplx;
 use crate::v1::error::APIError;
-use crate::v1::resources::pplx::completion::{PplxCompletionParameters, PplxCompletionResponse};
-use crate::v1::resources::pplx::completion_stream::PplxCompletionStreamParameters;
+use crate::v1::resources::pplx::completion::{PplxCompletionRequest, PplxCompletionResponse};
+use crate::v1::resources::pplx::completion_stream::PplxCompletionStreamRequest;
 
 impl Pplx {
     pub async fn create(
         &self,
-        pplx_params: PplxCompletionParameters,
+        pplx_params: PplxCompletionRequest,
     ) -> Result<PplxCompletionResponse, APIError> {
         let endpoint = "/completions";
         let response = self.post(endpoint, &pplx_params).await?;
@@ -21,13 +21,13 @@ impl Pplx {
 
     pub async fn create_stream(
         &self,
-        pplx_params: PplxCompletionParameters,
+        pplx_params: PplxCompletionRequest,
     ) -> Result<
         Pin<Box<dyn Stream<Item = Result<PplxCompletionResponse, APIError>> + Send>>,
         APIError,
     > {
         let endpoint = "/completions";
-        let stream_params = PplxCompletionStreamParameters {
+        let stream_params = PplxCompletionStreamRequest {
             model: pplx_params.model,
             prompt: pplx_params.prompt,
             max_tokens: pplx_params.max_tokens,

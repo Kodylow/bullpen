@@ -1,12 +1,10 @@
 use std::env;
 
+use bullpen::v1::api::Pplx;
+use bullpen::v1::models::PplxChatModel;
+use bullpen::v1::resources::pplx::chat_completion::{ChatMessage, PplxChatCompletionRequest, Role};
 use dotenv::dotenv;
 use futures_util::stream::StreamExt;
-use pplx_client::v1::api::Pplx;
-use pplx_client::v1::models::PplxChatModel;
-use pplx_client::v1::resources::pplx::chat_completion::{
-    ChatMessage, PplxChatCompletionParameters, Role,
-};
 
 #[tokio::main]
 async fn main() {
@@ -15,7 +13,7 @@ async fn main() {
 
     let client = Pplx::new(api_key);
 
-    let parameters = PplxChatCompletionParameters {
+    let parameters = PplxChatCompletionRequest {
         model: PplxChatModel::Mistral7bInstruct,
         messages: vec![
             ChatMessage {

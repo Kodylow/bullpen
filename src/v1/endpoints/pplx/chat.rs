@@ -5,16 +5,16 @@ use futures::Stream;
 use crate::v1::api::Pplx;
 use crate::v1::error::APIError;
 use crate::v1::resources::pplx::chat_completion::{
-    PplxChatCompletionParameters, PplxChatCompletionResponse,
+    PplxChatCompletionRequest, PplxChatCompletionResponse,
 };
 use crate::v1::resources::pplx::chat_completion_stream::{
-    PplxChatCompletionStreamParameters, PplxChatCompletionStreamResponse,
+    PplxChatCompletionStreamRequest, PplxChatCompletionStreamResponse,
 };
 
 impl Pplx {
     pub async fn chat(
         &self,
-        pplx_params: PplxChatCompletionParameters,
+        pplx_params: PplxChatCompletionRequest,
     ) -> Result<PplxChatCompletionResponse, APIError> {
         let endpoint = "/chat/completions";
         let response = self.post(endpoint, &pplx_params).await?;
@@ -26,13 +26,13 @@ impl Pplx {
 
     pub async fn stream_chat(
         &self,
-        params: PplxChatCompletionParameters,
+        params: PplxChatCompletionRequest,
     ) -> Result<
         Pin<Box<dyn Stream<Item = Result<PplxChatCompletionStreamResponse, APIError>> + Send>>,
         APIError,
     > {
         let endpoint = "/chat/completions";
-        let stream_params = PplxChatCompletionStreamParameters {
+        let stream_params = PplxChatCompletionStreamRequest {
             model: params.model,
             messages: params.messages,
             temperature: params.temperature,

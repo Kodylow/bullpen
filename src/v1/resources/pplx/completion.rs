@@ -3,17 +3,8 @@ use serde::{Deserialize, Serialize};
 use crate::v1::models::PplxCompletionModel;
 use crate::v1::resources::shared::{FinishReason, Usage};
 
-#[derive(Serialize, Debug, Clone)]
-pub struct PplxSimpleCompletionParameters {
-    pub model: String,
-    pub prompt: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub suffix: Option<String>,
-    pub max_tokens: u32,
-}
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct PplxCompletionParameters {
+pub struct PplxCompletionRequest {
     pub model: PplxCompletionModel,
     pub prompt: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -30,9 +21,9 @@ pub struct PplxCompletionParameters {
     pub frequency_penalty: Option<f32>,
 }
 
-impl Default for PplxCompletionParameters {
+impl Default for PplxCompletionRequest {
     fn default() -> Self {
-        PplxCompletionParameters {
+        PplxCompletionRequest {
             model: PplxCompletionModel::ReplitCodeV15_3b,
             prompt: "Some example like...".to_string(),
             temperature: None,

@@ -6,7 +6,7 @@ use crate::v1::resources::pplx::chat_completion::Role;
 use crate::v1::resources::shared::FinishReason;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct PplxChatCompletionStreamParameters {
+pub struct PplxChatCompletionStreamRequest {
     pub model: PplxChatModel,
     pub messages: Vec<ChatMessage>,
     #[serde(skip_serializing_if = "Option::is_none")]

@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::v1::models::PplxCompletionModel;
 
 #[derive(Serialize, Debug, Clone)]
-pub struct PplxCompletionStreamParameters {
+pub struct PplxCompletionStreamRequest {
     pub model: PplxCompletionModel,
     pub prompt: String,
     #[serde(skip_serializing_if = "Option::is_none")]

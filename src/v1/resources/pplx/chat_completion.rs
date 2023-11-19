@@ -13,7 +13,7 @@ pub struct PplxSimpleChatCompletionParameters {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct PplxChatCompletionParameters {
+pub struct PplxChatCompletionRequest {
     pub model: PplxChatModel,
     pub messages: Vec<ChatMessage>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -30,9 +30,9 @@ pub struct PplxChatCompletionParameters {
     pub frequency_penalty: Option<f32>,
 }
 
-impl Default for PplxChatCompletionParameters {
+impl Default for PplxChatCompletionRequest {
     fn default() -> Self {
-        PplxChatCompletionParameters {
+        PplxChatCompletionRequest {
             model: PplxChatModel::Mistral7bInstruct,
             messages: vec![ChatMessage {
                 role: Role::User,

@@ -1,6 +1,6 @@
 {
   description =
-    "Pplx Client: an unofficial async Rust library for interacting with the Perplexity API";
+    "Bullpen: an unofficial library for the Pplx API and Replit Modelfarm";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
@@ -19,7 +19,7 @@
         flakeboxLib = flakebox.lib.${system} { };
         rustSrc = flakeboxLib.filterSubPaths {
           root = builtins.path {
-            name = "pplx-api";
+            name = "bullpen";
             path = ./.;
           };
           paths = [ "Cargo.toml" "Cargo.lock" ".cargo" "src" ];
@@ -35,7 +35,7 @@
             workspaceDeps = craneLib.buildWorkspaceDepsOnly { };
             workspaceBuild =
               craneLib.buildWorkspace { cargoArtifacts = workspaceDeps; };
-            pplx-api = craneLib.buildPackage { };
+            bullpen = craneLib.buildPackage { };
           });
       in {
         devShells = flakeboxLib.mkShells {
