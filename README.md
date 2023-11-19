@@ -12,6 +12,8 @@ For Developers and Contributors: [Contributions](#contributions)
 
 Forked from OpenAI Dive: https://github.com/tjardoo/pplx-client
 
+You can run any of the examples in the `examples` dir with `cargo run --example <example_name>`
+
 ## Modelfarm Example
 
 ```rust
