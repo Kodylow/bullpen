@@ -1,6 +1,6 @@
 [package]
 name = "bullpen"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 license = "MIT"
 description = "Bullpen: an unofficial library for the Pplx API and Replit Modelfarm."
