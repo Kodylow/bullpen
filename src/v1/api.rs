@@ -10,7 +10,7 @@ use serde::Serialize;
 use crate::v1::error::APIError;
 
 const PPLX_API_ENDPOINT: &str = "https://api.perplexity.ai";
-const MODELFARM_API_ENDPOINT: &str = "https://production-modelfarm.replit.com";
+const MODELFARM_API_ENDPOINT: &str = "https://proxy-modelfarm.replit.app";
 
 pub struct Pplx {
     pub http_client: reqwest::Client,
