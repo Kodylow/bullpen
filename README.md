@@ -4,6 +4,8 @@ Bullpen is an unofficial async Rust library that allows you to interact with the
 
 You can use the `Modelfarm` client without any api keys, but you will need to provide an api key for the `Pplx` client.
 
+Modelfarm supports Chat, Completions, and Embeddings. Pplx supports Chat and Completions.
+
 I'll be adding bitcoin and ecash payments as a payment option for the Pplx client soon, then you won't need an api key.
 
 For Developers and Contributors: [Contributions](#contributions)
@@ -121,7 +123,7 @@ After installing `Nix`, you can enter the development environment with:
 nix develop
 ```
 
-Then build the project and run tests using `just` commands:
+Then build the project and run commands using `just`:
 
 ```bash
 # Available just recipes:

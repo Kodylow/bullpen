@@ -41,6 +41,7 @@
         devShells = flakeboxLib.mkShells {
           packages = [ ];
           buildInputs = [
+            nixpkgs.just
             nixpkgs.starship
             nixpkgs.darwin.apple_sdk.frameworks.SystemConfiguration
             nixpkgs.pkg-config
