@@ -27,7 +27,7 @@ Creates a completion for the chat message.
 
 ```rust
 use pplx_client::v1::api::Client;
-use pplx_client::v1::resources::chat_completion::{ChatCompletionParameters, ChatMessage, Role};
+use pplx_client::v1::resources::pplx::chat_completion::{ChatCompletionParameters, ChatMessage, Role};
 
 #[tokio::main]
 async fn main() {
@@ -82,7 +82,7 @@ Creates a completion for the chat message.
 ```rust
 use futures::StreamExt;
 use pplx_client::v1::api::Client;
-use pplx_client::v1::resources::chat_completion::{ChatCompletionParameters, ChatMessage, Role};
+use pplx_client::v1::resources::pplx::chat_completion::{ChatCompletionParameters, ChatMessage, Role};
 
 #[tokio::main]
 async fn main() {

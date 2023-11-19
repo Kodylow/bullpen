@@ -29,7 +29,7 @@ impl Display for PplxChatModel {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub enum PplxCompletionModel {
     #[serde(rename = "replit-code-v1.5-3b")]
     ReplitCodeV15_3b,
@@ -39,4 +39,34 @@ impl Display for PplxCompletionModel {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         write!(f, "{}", serde_json::to_string(self).map_err(|_| Error)?)
     }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+pub enum ModelfarmChatModel {
+    #[serde(rename = "chat-bison")]
+    TextBison,
+}
+
+impl Display for ModelfarmChatModel {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        write!(f, "{}", serde_json::to_string(self).map_err(|_| Error)?)
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+pub enum ModelfarmCompletionModel {
+    #[serde(rename = "text-bison")]
+    TextBison,
+}
+
+impl Display for ModelfarmCompletionModel {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        write!(f, "{}", serde_json::to_string(self).map_err(|_| Error)?)
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+pub enum ModelfarmEmbeddingModel {
+    #[serde(rename = "textembedding-gecko")]
+    TextEmbeddingGecko,
 }

@@ -1,9 +1,13 @@
 use std::env;
 
 use dotenv::dotenv;
+use futures_util::stream::StreamExt;
 use pplx_client::v1::api::Client;
 use pplx_client::v1::models::PplxChatModel;
-use pplx_client::v1::resources::chat_completion::{ChatCompletionParameters, ChatMessage, Role};
+use pplx_client::v1::resources::pplx::chat_completion::{
+    ChatMessage, PplxChatCompletionParameters, Role,
+};
+
 #[tokio::main]
 async fn main() {
     dotenv().ok();
@@ -11,7 +15,7 @@ async fn main() {
 
     let client = Client::new(api_key);
 
-    let parameters = ChatCompletionParameters {
+    let parameters = PplxChatCompletionParameters {
         model: PplxChatModel::Mistral7bInstruct,
         messages: vec![
             ChatMessage {
@@ -21,19 +25,28 @@ async fn main() {
             },
             ChatMessage {
                 role: Role::User,
-                content: "Where are you located?".to_string(),
+                content: "Tell me a story?".to_string(),
                 ..Default::default()
             },
         ],
         temperature: None,
         top_p: None,
         top_k: None,
-        max_tokens: Some(12),
+        max_tokens: Some(100),
         presence_penalty: None,
         frequency_penalty: None,
     };
 
-    let result = client.chat().create(parameters).await.unwrap();
+    let mut stream = client.chat().pplx_create_stream(parameters).await.unwrap();
 
-    println!("{:?}", result);
+    while let Some(response) = stream.next().await {
+        match response {
+            Ok(chat_response) => chat_response.choices.iter().for_each(|choice| {
+                if let Some(content) = choice.delta.content.as_ref() {
+                    print!("{}", content);
+                }
+            }),
+            Err(e) => eprintln!("{}", e),
+        }
+    }
 }

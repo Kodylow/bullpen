@@ -2,6 +2,11 @@
 use rand::{distributions::Alphanumeric, Rng};
 use serde::{Deserialize, Serialize};
 
+use crate::v1::models::{
+    ModelfarmChatModel, ModelfarmCompletionModel, ModelfarmEmbeddingModel, PplxChatModel,
+    PplxCompletionModel,
+};
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct BaseModel {
     name: String,
@@ -33,13 +38,50 @@ pub enum StopToken {
     Array(Vec<String>),
 }
 
-#[cfg(feature = "download")]
-pub fn generate_file_name(path: &str, length: u32, file_type: &str) -> String {
-    let random_file_name: String = rand::thread_rng()
-        .sample_iter(&Alphanumeric)
-        .take(length as usize)
-        .map(char::from)
-        .collect();
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub enum ChatModel {
+    #[serde(rename = "modelfarm")]
+    Modelfarm(ModelfarmChatModel),
+    #[serde(rename = "perplexity")]
+    Perplexity(PplxChatModel),
+}
 
-    format!("{}/{}.{}", path, random_file_name, file_type)
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub enum CompletionModel {
+    #[serde(rename = "modelfarm")]
+    Modelfarm(ModelfarmCompletionModel),
+    #[serde(rename = "perplexity")]
+    Perplexity(PplxCompletionModel),
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+pub enum EmbeddingModel {
+    #[serde(rename = "modelfarm")]
+    Modelfarm(ModelfarmEmbeddingModel),
+}
+
+impl ChatModel {
+    pub fn get_endpoint(&self) -> &'static str {
+        match self {
+            ChatModel::Modelfarm(_) => "/v1beta/chat",
+            ChatModel::Perplexity(_) => "/chat/completions",
+        }
+    }
+}
+
+impl CompletionModel {
+    pub fn get_endpoint(&self) -> &'static str {
+        match self {
+            CompletionModel::Modelfarm(_) => "/v1beta/text",
+            CompletionModel::Perplexity(_) => "/completions",
+        }
+    }
+}
+
+impl EmbeddingModel {
+    pub fn get_endpoint(&self) -> &'static str {
+        match self {
+            EmbeddingModel::Modelfarm(_) => "/v1beta/embedding",
+        }
+    }
 }

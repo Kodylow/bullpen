@@ -6,14 +6,14 @@ use crate::v1::models::PplxChatModel;
 use crate::v1::resources::shared::{FinishReason, Usage};
 
 #[derive(Serialize, Debug, Clone)]
-pub struct SimpleChatCompletionParameters {
+pub struct PplxSimpleChatCompletionParameters {
     pub model: String,
     pub messages: Vec<ChatMessage>,
     pub max_tokens: u32,
 }
 
-#[derive(Serialize, Debug, Clone)]
-pub struct ChatCompletionParameters {
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct PplxChatCompletionParameters {
     pub model: PplxChatModel,
     pub messages: Vec<ChatMessage>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -30,9 +30,9 @@ pub struct ChatCompletionParameters {
     pub frequency_penalty: Option<f32>,
 }
 
-impl Default for ChatCompletionParameters {
+impl Default for PplxChatCompletionParameters {
     fn default() -> Self {
-        ChatCompletionParameters {
+        PplxChatCompletionParameters {
             model: PplxChatModel::Mistral7bInstruct,
             messages: vec![ChatMessage {
                 role: Role::User,
@@ -68,7 +68,7 @@ impl Default for ChatMessage {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct ChatCompletionResponse {
+pub struct PplxChatCompletionResponse {
     pub id: String,
     pub object: String,
     pub created: u32,
