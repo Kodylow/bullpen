@@ -187,11 +187,12 @@ impl Pplx {
                             }
                         }
                     },
-                    Err(error) => {
-                        if let Err(_error) = tx.send(Err(APIError::StreamError(error.to_string())))
-                        {
-                            break;
-                        }
+                    Err(_error) => {
+                        // if let Err(_error) =
+                        // tx.send(Err(APIError::StreamError(error.
+                        // to_string()))) {
+                        //     break;
+                        // }
                     }
                 }
             }

@@ -23,14 +23,14 @@ async fn main() {
             },
             ChatMessage {
                 role: Role::User,
-                content: "Tell me a story?".to_string(),
+                content: "Tell me a story? An extremely long and detailed one?".to_string(),
                 ..Default::default()
             },
         ],
         temperature: None,
         top_p: None,
         top_k: None,
-        max_tokens: Some(100),
+        max_tokens: Some(1000),
         presence_penalty: None,
         frequency_penalty: None,
     };
