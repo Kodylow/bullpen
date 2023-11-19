@@ -1,11 +1,11 @@
 [package]
 name = "bullpen"
-version = "0.2.13"
+version = "0.1.0"
 edition = "2021"
 license = "MIT"
-description = "Pplx Client is an unofficial async Rust library that allows you to interact with the Perplexity API."
-repository = "https://github.com/kodylow/pplx_client"
-documentation = "https://docs.rs/pplx_client"
+description = "Bullpen: an unofficial library for the Pplx API and Replit Modelfarm."
+repository = "https://github.com/kodylow/bullpen"
+documentation = "https://docs.rs/bullpen"
 keywords = ["async", "ai", "chatgpt"]
 
 [dependencies]
