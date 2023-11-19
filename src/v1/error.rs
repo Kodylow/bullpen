@@ -1,31 +1,16 @@
-use std::error::Error;
-use std::fmt::{Display, Formatter, Result};
+use thiserror::Error;
 
-use serde::Deserialize;
-
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Error)]
 pub enum APIError {
+    #[error("Endpoint error: {0}")]
     EndpointError(String),
+
+    #[error("Parse error: {0}")]
     ParseError(String),
+
+    #[error("File error: {0}")]
     FileError(String),
+
+    #[error("Stream error: {0}")]
     StreamError(String),
-}
-
-impl APIError {
-    fn message(&self) -> &str {
-        match self {
-            APIError::EndpointError(message)
-            | APIError::ParseError(message)
-            | APIError::FileError(message)
-            | APIError::StreamError(message) => message,
-        }
-    }
-}
-
-impl Error for APIError {}
-
-impl Display for APIError {
-    fn fmt(&self, f: &mut Formatter) -> Result {
-        write!(f, "{}", self.message())
-    }
 }

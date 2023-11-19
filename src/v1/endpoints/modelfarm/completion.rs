@@ -1,6 +1,8 @@
 use std::pin::Pin;
 
 use futures::Stream;
+use tokio_stream::StreamExt;
+use tokio_util::bytes::Bytes;
 
 use crate::v1::api::Modelfarm;
 use crate::v1::error::APIError;
@@ -29,6 +31,13 @@ impl Modelfarm {
         APIError,
     > {
         let endpoint = "/v1beta/completions_streaming";
-        Ok(self.post_stream(endpoint, &modelfarm_params).await)
+        let res: Pin<Box<dyn Stream<Item = Result<Bytes, anyhow::Error>> + Send>> =
+            self.post_stream(endpoint, &modelfarm_params).await;
+        let stream = res.map(|res| {
+            let res = res.map_err(anyhow::Error::from).unwrap();
+            let chat_response: ModelfarmCompletionResponse = serde_json::from_slice(&res).unwrap();
+            Ok(chat_response)
+        });
+        Ok(Box::pin(stream))
     }
 }

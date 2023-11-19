@@ -22,7 +22,7 @@ async fn main() {
             },
         }],
         messages: vec![ChatMessage {
-            content: "How do I write a nix flake for a rust project?".to_string(),
+            content: "Tell me a story? An extremely long and detailed one?".to_string(),
             author: "user".to_string(),
         }],
     };
