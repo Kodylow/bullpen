@@ -7,23 +7,13 @@ use crate::v1::error::APIError;
 use crate::v1::resources::pplx::completion::{PplxCompletionParameters, PplxCompletionResponse};
 use crate::v1::resources::pplx::completion_stream::PplxCompletionStreamParameters;
 
-pub struct Completions<'a> {
-    pub client: &'a Pplx,
-}
-
 impl Pplx {
-    pub fn completions(&self) -> Completions {
-        Completions { client: self }
-    }
-}
-
-impl Completions<'_> {
     pub async fn create(
         &self,
         pplx_params: PplxCompletionParameters,
     ) -> Result<PplxCompletionResponse, APIError> {
         let endpoint = "/completions";
-        let response = self.client.post(endpoint, &pplx_params).await?;
+        let response = self.post(endpoint, &pplx_params).await?;
         let completion_response: PplxCompletionResponse = serde_json::from_str(&response).unwrap();
 
         Ok(completion_response)
@@ -49,6 +39,6 @@ impl Completions<'_> {
             frequency_penalty: pplx_params.frequency_penalty,
         };
 
-        Ok(self.client.post_stream(endpoint, &stream_params).await)
+        Ok(self.post_stream(endpoint, &stream_params).await)
     }
 }

@@ -1,7 +1,7 @@
 use std::env;
 
 use dotenv::dotenv;
-use pplx_client::v1::api::Client;
+use pplx_client::v1::api::Pplx;
 use pplx_client::v1::models::PplxChatModel;
 use pplx_client::v1::resources::pplx::chat_completion::{
     ChatMessage, PplxChatCompletionParameters, Role,
@@ -11,7 +11,7 @@ async fn main() {
     dotenv().ok();
     let api_key = env::var("PPLX_API_KEY").expect("$PPLX_API_KEY is not set");
 
-    let client = Client::new(api_key);
+    let pplx = Pplx::new(api_key);
 
     let parameters = PplxChatCompletionParameters {
         model: PplxChatModel::Mistral7bInstruct,
@@ -35,7 +35,7 @@ async fn main() {
         frequency_penalty: None,
     };
 
-    let result = client.chat().pplx_create(parameters).await.unwrap();
+    let result = pplx.chat(parameters).await.unwrap();
 
     println!("{:?}", result);
 }

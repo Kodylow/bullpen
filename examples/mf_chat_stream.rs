@@ -1,19 +1,13 @@
-use std::env;
-
-use dotenv::dotenv;
 use futures_util::stream::StreamExt;
-use pplx_client::v1::api::Client;
+use pplx_client::v1::api::Modelfarm;
 use pplx_client::v1::models::ModelfarmChatModel;
 use pplx_client::v1::resources::modelfarm::chat_completion::{
-    ChatExample, ChatMessage, ChatSession, ModelfarmChatCompletionParameters,
+    ChatExample, ChatMessage, ChatSession, ModelfarmChatCompletionRequest, ModelfarmChatParameters,
 };
 
 #[tokio::main]
 async fn main() {
-    dotenv().ok();
-    let api_key = env::var("PPLX_API_KEY").expect("$PPLX_API_KEY is not set");
-
-    let client = Client::new(api_key);
+    let modelfarm = Modelfarm::new();
 
     let chat_session = ChatSession {
         context: "You are a programmer bot".to_string(),
@@ -28,19 +22,21 @@ async fn main() {
             },
         }],
         messages: vec![ChatMessage {
-            content: "How do I write a nix flake for a rust
-    project?"
-                .to_string(),
+            content: "How do I write a nix flake for a rust project?".to_string(),
             author: "user".to_string(),
         }],
     };
 
-    let parameters = ModelfarmChatCompletionParameters {
-        model: ModelfarmChatModel::TextBison,
-        parameters: chat_session.model_dump(),
+    let req = ModelfarmChatCompletionRequest {
+        model: ModelfarmChatModel::ChatBison,
+        parameters: ModelfarmChatParameters {
+            prompts: vec![chat_session],
+            temperature: 0.2,
+            max_output_tokens: 1024,
+        },
     };
 
-    let mut stream = client.chat().mf_create_stream(parameters).await.unwrap();
+    let mut stream = modelfarm.stream_chat(req).await.unwrap();
 
     while let Some(response) = stream.next().await {
         match response {

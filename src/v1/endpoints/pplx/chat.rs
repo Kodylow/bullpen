@@ -11,30 +11,20 @@ use crate::v1::resources::pplx::chat_completion_stream::{
     PplxChatCompletionStreamParameters, PplxChatCompletionStreamResponse,
 };
 
-pub struct Chat<'a> {
-    pub client: &'a Pplx,
-}
-
 impl Pplx {
-    pub fn chat(&self) -> Chat {
-        Chat { client: self }
-    }
-}
-
-impl Chat<'_> {
-    pub async fn create(
+    pub async fn chat(
         &self,
         pplx_params: PplxChatCompletionParameters,
     ) -> Result<PplxChatCompletionResponse, APIError> {
         let endpoint = "/chat/completions";
-        let response = self.client.post(endpoint, &pplx_params).await?;
+        let response = self.post(endpoint, &pplx_params).await?;
         let chat_completion_response: PplxChatCompletionResponse =
             serde_json::from_str(&response).unwrap();
 
         Ok(chat_completion_response)
     }
 
-    pub async fn create_stream(
+    pub async fn stream_chat(
         &self,
         params: PplxChatCompletionParameters,
     ) -> Result<
@@ -54,6 +44,6 @@ impl Chat<'_> {
             frequency_penalty: params.frequency_penalty,
         };
 
-        Ok(self.client.post_stream(endpoint, &stream_params).await)
+        Ok(self.post_stream(endpoint, &stream_params).await)
     }
 }

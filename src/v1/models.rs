@@ -44,7 +44,7 @@ impl Display for PplxCompletionModel {
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub enum ModelfarmChatModel {
     #[serde(rename = "chat-bison")]
-    TextBison,
+    ChatBison,
 }
 
 impl Display for ModelfarmChatModel {

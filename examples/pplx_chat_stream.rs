@@ -2,7 +2,7 @@ use std::env;
 
 use dotenv::dotenv;
 use futures_util::stream::StreamExt;
-use pplx_client::v1::api::Client;
+use pplx_client::v1::api::Pplx;
 use pplx_client::v1::models::PplxChatModel;
 use pplx_client::v1::resources::pplx::chat_completion::{
     ChatMessage, PplxChatCompletionParameters, Role,
@@ -13,7 +13,7 @@ async fn main() {
     dotenv().ok();
     let api_key = env::var("PPLX_API_KEY").expect("$PPLX_API_KEY is not set");
 
-    let client = Client::new(api_key);
+    let client = Pplx::new(api_key);
 
     let parameters = PplxChatCompletionParameters {
         model: PplxChatModel::Mistral7bInstruct,
@@ -37,7 +37,7 @@ async fn main() {
         frequency_penalty: None,
     };
 
-    let mut stream = client.chat().pplx_create_stream(parameters).await.unwrap();
+    let mut stream = client.stream_chat(parameters).await.unwrap();
 
     while let Some(response) = stream.next().await {
         match response {

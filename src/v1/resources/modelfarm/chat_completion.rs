@@ -25,16 +25,16 @@ pub struct ChatSession {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct Parameters {
-    prompts: Vec<ChatSession>,
-    temperature: f64,
-    max_output_tokens: Option<usize>,
+pub struct ModelfarmChatParameters {
+    pub prompts: Vec<ChatSession>,
+    pub temperature: f64,
+    pub max_output_tokens: usize,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ModelfarmChatCompletionRequest {
     pub model: ModelfarmChatModel,
-    pub parameters: Parameters,
+    pub parameters: ModelfarmChatParameters,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
