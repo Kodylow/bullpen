@@ -12,6 +12,7 @@ use crate::v1::error::APIError;
 
 const PPLX_API_ENDPOINT: &str = "https://api.perplexity.ai";
 const MODELFARM_API_ENDPOINT: &str = "https://proxy-modelfarm.replit.app";
+const OLLAMA_API_ENDPOINT: &str = "http://localhost:11434";
 
 pub struct Pplx {
     pub http_client: reqwest::Client,
@@ -55,26 +56,21 @@ impl Pplx {
     pub async fn post<T: Serialize>(&self, path: &str, parameters: &T) -> Result<String, APIError> {
         let url = format!("{}{}", &self.base_url, path);
 
-        let response = self
-            .http_client
-            .post(url)
-            .header(reqwest::header::CONTENT_TYPE, "application/json")
-            .bearer_auth(&self.api_key)
-            .json(&parameters)
-            .send()
-            .await
-            .unwrap();
+        let response =
+            self.http_client
+                .post(url)
+                .header(reqwest::header::CONTENT_TYPE, "application/json")
+                .bearer_auth(&self.api_key)
+                .json(&parameters)
+                .send()
+                .await
+                .unwrap();
 
         if !response.status().is_success() {
             return Err(APIError::EndpointError(response.text().await.unwrap()));
         }
 
-        let response_text = response.text().await.unwrap();
-
-        #[cfg(feature = "log")]
-        log::trace!("{}", response_text);
-
-        Ok(response_text)
+        Ok(response.text().await.unwrap())
     }
 
     pub async fn delete(&self, path: &str) -> Result<String, APIError> {
@@ -232,10 +228,87 @@ impl Modelfarm {
             return Err(APIError::EndpointError(response.text().await.unwrap()));
         }
 
-        let response_text = response.text().await.unwrap();
+        Ok(response.text().await.unwrap())
+    }
 
-        #[cfg(feature = "log")]
-        log::trace!("{}", response_text);
+    pub async fn post<T: Serialize>(&self, path: &str, parameters: &T) -> Result<String, APIError> {
+        let url = format!("{}{}", &self.base_url, path);
+
+        let response = self
+            .http_client
+            .post(url)
+            .header(reqwest::header::CONTENT_TYPE, "application/json")
+            .json(&parameters)
+            .send()
+            .await
+            .unwrap();
+
+        if !response.status().is_success() {
+            return Err(APIError::EndpointError(response.text().await.unwrap()));
+        }
+
+        Ok(response.text().await.unwrap())
+    }
+
+    pub async fn post_stream<I>(
+        &self,
+        path: &str,
+        parameters: &I,
+    ) -> Pin<Box<dyn Stream<Item = anyhow::Result<Bytes>> + Send>>
+    where
+        I: Serialize,
+    {
+        let url = format!("{}{}", &self.base_url, path);
+
+        let request = self
+            .http_client
+            .post(url)
+            .header(reqwest::header::CONTENT_TYPE, "application/json")
+            .json(&parameters)
+            .build()
+            .unwrap();
+
+        Box::pin(
+            self.http_client
+                .execute(request)
+                .await
+                .map_err(anyhow::Error::from)
+                .unwrap()
+                .bytes_stream()
+                .map_err(anyhow::Error::from),
+        )
+    }
+}
+
+pub struct Ollama {
+    pub http_client: reqwest::Client,
+    pub base_url: String,
+}
+
+impl Ollama {
+    pub fn new() -> Self {
+        Self {
+            http_client: reqwest::Client::new(),
+            base_url: OLLAMA_API_ENDPOINT.to_string(),
+        }
+    }
+
+    pub async fn get(&self, path: &str) -> Result<String, APIError> {
+        let url = format!("{}{}", &self.base_url, path);
+
+        let response = self
+            .http_client
+            .get(url)
+            .header(reqwest::header::CONTENT_TYPE, "application/json")
+            .send()
+            .await
+            .unwrap();
+
+        if response.status().is_server_error() {
+            return Err(APIError::EndpointError(response.text().await.unwrap()));
+        }
+
+        let response_text = response.text().await.unwrap();
 
         Ok(response_text)
     }
@@ -256,12 +329,7 @@ impl Modelfarm {
             return Err(APIError::EndpointError(response.text().await.unwrap()));
         }
 
-        let response_text = response.text().await.unwrap();
-
-        #[cfg(feature = "log")]
-        log::trace!("{}", response_text);
-
-        Ok(response_text)
+        Ok(response.text().await.unwrap())
     }
 
     pub async fn post_stream<I>(

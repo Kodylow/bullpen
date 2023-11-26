@@ -5,13 +5,6 @@ use serde::{Deserialize, Serialize};
 use crate::v1::models::PplxChatModel;
 use crate::v1::resources::shared::{FinishReason, Usage};
 
-#[derive(Serialize, Debug, Clone)]
-pub struct PplxSimpleChatCompletionParameters {
-    pub model: String,
-    pub messages: Vec<ChatMessage>,
-    pub max_tokens: u32,
-}
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PplxChatCompletionRequest {
     pub model: PplxChatModel,

@@ -70,3 +70,93 @@ pub enum ModelfarmEmbeddingModel {
     #[serde(rename = "textembedding-gecko")]
     TextEmbeddingGecko,
 }
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+pub enum OllamaModel {
+    #[serde(rename = "mistral")]
+    Mistral,
+    #[serde(rename = "llama2")]
+    Llama2,
+    #[serde(rename = "codellama")]
+    Codellama,
+    #[serde(rename = "llama2-uncensored")]
+    Llama2Uncensored,
+    #[serde(rename = "orca-mini")]
+    OrcaMini,
+    #[serde(rename = "vicuna")]
+    Vicuna,
+    #[serde(rename = "wizard-vicuna-uncensored")]
+    WizardVicunaUncensored,
+    #[serde(rename = "phind-codellama")]
+    PhindCodellama,
+    #[serde(rename = "mistral-openorca")]
+    MistralOpenorca,
+    #[serde(rename = "nous-hermes")]
+    NousHermes,
+    #[serde(rename = "wizardcoder")]
+    Wizardcoder,
+    #[serde(rename = "zephyr")]
+    Zephyr,
+    #[serde(rename = "wizard-math")]
+    WizardMath,
+    #[serde(rename = "llama2-chinese")]
+    Llama2Chinese,
+    #[serde(rename = "stable-beluga")]
+    StableBeluga,
+    #[serde(rename = "falcon")]
+    Falcon,
+    #[serde(rename = "codeup")]
+    Codeup,
+    #[serde(rename = "everythinglm")]
+    Everythinglm,
+    #[serde(rename = "medllama2")]
+    Medllama2,
+    #[serde(rename = "wizardlm-uncensored")]
+    WizardlmUncensored,
+    #[serde(rename = "wizard-vicuna")]
+    WizardVicuna,
+    #[serde(rename = "open-orca-platypus2")]
+    OpenOrcaPlatypus2,
+    #[serde(rename = "starcoder")]
+    Starcoder,
+    #[serde(rename = "dolphin2.2-mistral")]
+    Dolphin22Mistral,
+    #[serde(rename = "orca2")]
+    Orca2,
+    #[serde(rename = "yarn-mistral")]
+    YarnMistral,
+    #[serde(rename = "deepseek-coder")]
+    DeepseekCoder,
+    #[serde(rename = "openhermes2.5-mistral")]
+    Openhermes25Mistral,
+    #[serde(rename = "samantha-mistral")]
+    SamanthaMistral,
+    #[serde(rename = "openchat")]
+    Openchat,
+    #[serde(rename = "openhermes2-mistral")]
+    Openhermes2Mistral,
+    #[serde(rename = "sqlcoder")]
+    Sqlcoder,
+    #[serde(rename = "yi")]
+    Yi,
+    #[serde(rename = "wizardlm")]
+    Wizardlm,
+    #[serde(rename = "dolphin2.1-mistral")]
+    Dolphin21Mistral,
+    #[serde(rename = "mistrallite")]
+    Mistrallite,
+    #[serde(rename = "codebooga")]
+    Codebooga,
+    #[serde(rename = "yarn-llama2")]
+    YarnLlama2,
+    #[serde(rename = "neural-chat")]
+    NeuralChat,
+    #[serde(rename = "goliath")]
+    Goliath,
+    #[serde(rename = "nexusraven")]
+    Nexusraven,
+    #[serde(rename = "xwinlm")]
+    Xwinlm,
+    #[serde(rename = "alfred")]
+    Alfred,
+}
