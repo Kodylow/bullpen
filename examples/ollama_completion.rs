@@ -1,6 +1,7 @@
 use bullpen::v1::api::Ollama;
 use bullpen::v1::models::OllamaModel;
 use bullpen::v1::resources::ollama::completion::OllamaCompletionRequest;
+use tokio_stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
@@ -17,7 +18,9 @@ async fn main() {
         frequency_penalty: None,
     };
 
-    let result = ollama.create(req).await.unwrap();
+    let mut stream = ollama.create_stream(req).await.unwrap();
 
-    println!("{:?}", result);
+    while let Some(response) = stream.next().await {
+        print!("{}", response.unwrap().response);
+    }
 }

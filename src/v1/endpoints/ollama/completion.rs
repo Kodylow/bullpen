@@ -35,13 +35,13 @@ impl Ollama {
         let res = self
             .post_stream(endpoint, &ollama_params.to_stream_request())
             .await;
-        let stream =
-            res.map(|res| {
-                let res = res.map_err(anyhow::Error::from).unwrap();
-                let completion_response: OllamaCompletionResponse =
-                    serde_json::from_slice(&res).unwrap();
-                Ok(completion_response)
-            });
+        let stream = res.map(|res| match res {
+            Ok(res) => match serde_json::from_slice::<OllamaCompletionResponse>(&res) {
+                Ok(completion_response) => Ok(completion_response),
+                Err(_) => Err(APIError::ParseError("Invalid JSON response".to_string())),
+            },
+            Err(e) => Err(APIError::StreamError(e.to_string())),
+        });
 
         Ok(Box::pin(stream))
     }

@@ -1,5 +1,3 @@
-use std::time::Duration;
-
 use serde::{Deserialize, Serialize};
 
 use crate::v1::models::OllamaModel;
@@ -64,23 +62,23 @@ pub struct OllamaCompletionResponse {
     pub response: String,
     pub done: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub total_duration: Option<Duration>,
+    pub total_duration: Option<u64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub load_duration: Option<Duration>,
+    pub load_duration: Option<u64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub sample_count: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub sample_duration: Option<Duration>,
+    pub sample_duration: Option<u64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub prompt_eval_count: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub prompt_eval_duration: Option<Duration>,
+    pub prompt_eval_duration: Option<u64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub eval_count: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub eval_duration: Option<Duration>,
+    pub eval_duration: Option<u64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub context: Option<String>,
+    pub context: Option<Vec<u32>>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
