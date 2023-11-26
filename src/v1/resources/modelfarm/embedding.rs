@@ -19,7 +19,7 @@ pub struct EmbeddingMetadata {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ModelfarmEmbeddingParameters {
+pub struct ModelfarmEmbeddingRequest {
     pub model: String,
     pub parameters: HashMap<String, serde_json::Value>,
 }
