@@ -1,8 +1,8 @@
 # Bullpen
 
-Bullpen is an unofficial async Rust library that allows you to interact with the Pplx API and Modelfarm APIs.
+Bullpen is an unofficial async Rust client library for the best AI models. It currently supports [Modelfarm](https://modelfarm.ai), [Pplx](https://pplx.dev), and [Ollama](https://ollama.ai)
 
-You can use the `Modelfarm` client without any api keys, but you will need to provide an api key for the `Pplx` client.
+The `Modelfarm` client works out of the box without any api keys, the Pplx client requires an api key, and the Ollama client requires you to build and run the Ollama server locally.
 
 Modelfarm supports Chat, Completions, and Embeddings. Pplx supports Chat and Completions.
 
