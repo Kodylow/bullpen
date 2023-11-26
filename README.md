@@ -4,7 +4,7 @@ Bullpen is an unofficial async Rust client library for the best AI models. It cu
 
 The `Modelfarm` client works out of the box without any api keys, the Pplx client requires an api key, and the Ollama client requires you to build and run the Ollama server locally.
 
-Modelfarm supports Chat, Completions, and Embeddings. Pplx supports Chat and Completions.
+Modelfarm supports Chat, Completions, and Embeddings. Pplx supports Chat and Completions. Ollama supports Completions and Embeddings.
 
 I'll be adding bitcoin and ecash payments as a payment option for the Pplx client soon, then you won't need an api key.
 
@@ -97,6 +97,32 @@ async fn main() {
             }),
             Err(e) => eprintln!("{}", e),
         }
+    }
+}
+```
+
+## Ollama Example
+
+```rust
+#[tokio::main]
+async fn main() {
+    let ollama = Ollama::new(); // Must have the Ollama server running locally
+
+    let req = OllamaCompletionRequest {
+        model: OllamaModel::Llama2,
+        prompt: "How do I write a nix flake for a rust project?".to_string(),
+        max_tokens: Some(100),
+        temperature: Some(0.2),
+        top_p: None,
+        top_k: None,
+        presence_penalty: None,
+        frequency_penalty: None,
+    };
+
+    let mut stream = ollama.create_stream(req).await.unwrap();
+
+    while let Some(response) = stream.next().await {
+        print!("{}", response.unwrap().response);
     }
 }
 ```
