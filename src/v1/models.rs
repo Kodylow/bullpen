@@ -1,6 +1,34 @@
-use std::fmt::{Display, Error, Formatter, Result};
+use std::fmt::{Display, Formatter};
+use std::str::FromStr;
 
+use anyhow::Result;
+use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
+
+fn from_str<T: DeserializeOwned>(s: &str) -> Result<T> {
+    serde_json::from_str(s).map_err(Into::into)
+}
+
+macro_rules! impl_from_str {
+    ($($t:ty)*) => ($(
+        impl FromStr for $t {
+            type Err = anyhow::Error;
+
+            fn from_str(s: &str) -> Result<Self> {
+                from_str(s)
+            }
+        }
+    )*)
+}
+
+impl_from_str! {
+    PplxChatModel
+    PplxCompletionModel
+    ModelfarmChatModel
+    ModelfarmCompletionModel
+    ModelfarmEmbeddingModel
+    OllamaModel
+}
 
 // https://api.perplexity.ai
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
@@ -28,8 +56,12 @@ pub enum PplxChatModel {
 }
 
 impl Display for PplxChatModel {
-    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-        write!(f, "{}", serde_json::to_string(self).map_err(|_| Error)?)
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            serde_json::to_string(self).map_err(|_| std::fmt::Error)?
+        )
     }
 }
 
@@ -40,8 +72,8 @@ pub enum PplxCompletionModel {
 }
 
 impl Display for PplxCompletionModel {
-    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-        write!(f, "{}", serde_json::to_string(self).map_err(|_| Error)?)
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string(self).unwrap()).map_err(Into::into)
     }
 }
 
@@ -52,8 +84,8 @@ pub enum ModelfarmChatModel {
 }
 
 impl Display for ModelfarmChatModel {
-    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-        write!(f, "{}", serde_json::to_string(self).map_err(|_| Error)?)
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string(self).unwrap()).map_err(Into::into)
     }
 }
 
@@ -64,8 +96,8 @@ pub enum ModelfarmCompletionModel {
 }
 
 impl Display for ModelfarmCompletionModel {
-    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-        write!(f, "{}", serde_json::to_string(self).map_err(|_| Error)?)
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", serde_json::to_string(self).unwrap()).map_err(Into::into)
     }
 }
 
