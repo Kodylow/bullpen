@@ -13,14 +13,18 @@ pub enum PplxChatModel {
     Llama213bChat,
     #[serde(rename = "llama-2-70b-chat")]
     Llama270bChat,
-    #[serde(rename = "openhermes-2-mistral-7b")]
-    Openhermes2Mistral7b,
-    #[serde(rename = "openhermes-2.5-mistral-7b")]
-    Openhermes25Mistral7b,
-    #[serde(rename = "pplx-7b-chat-alpha")]
+    // #[serde(rename = "openhermes-2-mistral-7b")]
+    // Openhermes2Mistral7b,
+    // #[serde(rename = "openhermes-2.5-mistral-7b")]
+    // Openhermes25Mistral7b,
+    #[serde(rename = "pplx-7b-chat")]
     Pplx7bChatAlpha,
-    #[serde(rename = "pplx-70b-chat-alpha")]
+    #[serde(rename = "pplx-70b-chat")]
     Pplx70bChatAlpha,
+    #[serde(rename = "pplx-7b-online")]
+    Pplx7bOnlineAlpha,
+    #[serde(rename = "pplx-70b-online")]
+    Pplx70bOnlineAlpha,
 }
 
 impl Display for PplxChatModel {

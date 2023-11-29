@@ -1,6 +1,6 @@
 {
   description =
-    "Bullpen: an unofficial library for the Pplx API and Replit Modelfarm";
+    "Bullpen: an unofficial client library for all the best AI model APIs";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
