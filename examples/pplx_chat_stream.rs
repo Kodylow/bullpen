@@ -1,8 +1,8 @@
 use std::env;
 
-use bullpen::v1::api::Pplx;
-use bullpen::v1::models::PplxChatModel;
-use bullpen::v1::resources::pplx::chat_completion::{ChatMessage, PplxChatCompletionRequest, Role};
+use bullpen::api::Pplx;
+use bullpen::models::PplxChatModel;
+use bullpen::resources::pplx::chat_completion::{ChatMessage, PplxChatCompletionRequest, Role};
 use dotenv::dotenv;
 use futures_util::stream::StreamExt;
 

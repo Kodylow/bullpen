@@ -2,10 +2,10 @@ use std::pin::Pin;
 
 use futures::Stream;
 
-use crate::v1::api::Pplx;
-use crate::v1::error::APIError;
-use crate::v1::resources::pplx::completion::{PplxCompletionRequest, PplxCompletionResponse};
-use crate::v1::resources::pplx::completion_stream::PplxCompletionStreamRequest;
+use crate::api::Pplx;
+use crate::error::APIError;
+use crate::resources::pplx::completion::{PplxCompletionRequest, PplxCompletionResponse};
+use crate::resources::pplx::completion_stream::PplxCompletionStreamRequest;
 
 impl Pplx {
     pub async fn create(

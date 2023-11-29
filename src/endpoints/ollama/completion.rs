@@ -3,9 +3,9 @@ use std::pin::Pin;
 use futures::Stream;
 use tokio_stream::StreamExt;
 
-use crate::v1::api::Ollama;
-use crate::v1::error::APIError;
-use crate::v1::resources::ollama::completion::{OllamaCompletionRequest, OllamaCompletionResponse};
+use crate::api::Ollama;
+use crate::error::APIError;
+use crate::resources::ollama::completion::{OllamaCompletionRequest, OllamaCompletionResponse};
 
 impl Ollama {
     pub async fn create(

@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::v1::models::OllamaModel;
+use crate::models::OllamaModel;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct OllamaEmbeddingRequest {

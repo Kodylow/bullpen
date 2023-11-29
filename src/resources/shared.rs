@@ -2,7 +2,7 @@
 use rand::{distributions::Alphanumeric, Rng};
 use serde::{Deserialize, Serialize};
 
-use crate::v1::models::{
+use crate::models::{
     ModelfarmChatModel, ModelfarmCompletionModel, ModelfarmEmbeddingModel, PplxChatModel,
     PplxCompletionModel,
 };

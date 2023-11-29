@@ -2,8 +2,8 @@ use std::fmt::Display;
 
 use serde::{Deserialize, Serialize};
 
-use crate::v1::models::PplxChatModel;
-use crate::v1::resources::shared::{FinishReason, Usage};
+use crate::models::PplxChatModel;
+use crate::resources::shared::{FinishReason, Usage};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PplxChatCompletionRequest {

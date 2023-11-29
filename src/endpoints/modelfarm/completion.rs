@@ -4,9 +4,9 @@ use futures::Stream;
 use tokio_stream::StreamExt;
 use tokio_util::bytes::Bytes;
 
-use crate::v1::api::Modelfarm;
-use crate::v1::error::APIError;
-use crate::v1::resources::modelfarm::completion::{
+use crate::api::Modelfarm;
+use crate::error::APIError;
+use crate::resources::modelfarm::completion::{
     ModelfarmCompletionRequest, ModelfarmCompletionResponse,
 };
 

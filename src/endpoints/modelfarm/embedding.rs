@@ -1,6 +1,6 @@
-use crate::v1::api::Modelfarm;
-use crate::v1::error::APIError;
-use crate::v1::resources::modelfarm::embedding::{
+use crate::api::Modelfarm;
+use crate::error::APIError;
+use crate::resources::modelfarm::embedding::{
     ModelfarmEmbeddingRequest, ModelfarmEmbeddingResponse,
 };
 

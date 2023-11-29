@@ -2,12 +2,12 @@ use std::pin::Pin;
 
 use futures::Stream;
 
-use crate::v1::api::Pplx;
-use crate::v1::error::APIError;
-use crate::v1::resources::pplx::chat_completion::{
+use crate::api::Pplx;
+use crate::error::APIError;
+use crate::resources::pplx::chat_completion::{
     PplxChatCompletionRequest, PplxChatCompletionResponse,
 };
-use crate::v1::resources::pplx::chat_completion_stream::{
+use crate::resources::pplx::chat_completion_stream::{
     PplxChatCompletionStreamRequest, PplxChatCompletionStreamResponse,
 };
 

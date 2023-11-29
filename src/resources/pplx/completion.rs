@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-use crate::v1::models::PplxCompletionModel;
-use crate::v1::resources::shared::{FinishReason, Usage};
+use crate::models::PplxCompletionModel;
+use crate::resources::shared::{FinishReason, Usage};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PplxCompletionRequest {

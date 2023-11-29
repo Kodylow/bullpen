@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
 use super::Metadata;
-use crate::v1::models::ModelfarmChatModel;
+use crate::models::ModelfarmChatModel;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ChatMessage {

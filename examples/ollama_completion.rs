@@ -1,6 +1,6 @@
-use bullpen::v1::api::Ollama;
-use bullpen::v1::models::OllamaModel;
-use bullpen::v1::resources::ollama::completion::OllamaCompletionRequest;
+use bullpen::api::Ollama;
+use bullpen::models::OllamaModel;
+use bullpen::resources::ollama::completion::OllamaCompletionRequest;
 use tokio_stream::StreamExt;
 
 #[tokio::main]

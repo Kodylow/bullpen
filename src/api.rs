@@ -8,7 +8,7 @@ use serde::de::DeserializeOwned;
 use serde::Serialize;
 use tokio_util::bytes::Bytes;
 
-use crate::v1::error::APIError;
+use crate::error::APIError;
 
 const PPLX_API_ENDPOINT: &str = "https://api.perplexity.ai";
 const MODELFARM_API_ENDPOINT: &str = "https://proxy-modelfarm.replit.app";

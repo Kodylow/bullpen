@@ -1,6 +1,6 @@
-use bullpen::v1::api::Ollama;
-use bullpen::v1::models::OllamaModel;
-use bullpen::v1::resources::ollama::embedding::OllamaEmbeddingRequest;
+use bullpen::api::Ollama;
+use bullpen::models::OllamaModel;
+use bullpen::resources::ollama::embedding::OllamaEmbeddingRequest;
 
 #[tokio::main]
 async fn main() {

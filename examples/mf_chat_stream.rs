@@ -1,6 +1,6 @@
-use bullpen::v1::api::Modelfarm;
-use bullpen::v1::models::ModelfarmChatModel;
-use bullpen::v1::resources::modelfarm::chat_completion::{
+use bullpen::api::Modelfarm;
+use bullpen::models::ModelfarmChatModel;
+use bullpen::resources::modelfarm::chat_completion::{
     ChatExample, ChatMessage, ChatSession, ModelfarmChatCompletionRequest, ModelfarmChatParameters,
 };
 use futures_util::stream::StreamExt;
@@ -27,14 +27,15 @@ async fn main() {
         }],
     };
 
-    let req = ModelfarmChatCompletionRequest {
-        model: ModelfarmChatModel::ChatBison,
-        parameters: ModelfarmChatParameters {
-            prompts: vec![chat_session],
-            temperature: 0.2,
-            max_output_tokens: 1024,
-        },
-    };
+    let req =
+        ModelfarmChatCompletionRequest {
+            model: ModelfarmChatModel::ChatBison,
+            parameters: ModelfarmChatParameters {
+                prompts: vec![chat_session],
+                temperature: 0.2,
+                max_output_tokens: 1024,
+            },
+        };
 
     let mut stream = modelfarm.stream_chat(req).await.unwrap();
 

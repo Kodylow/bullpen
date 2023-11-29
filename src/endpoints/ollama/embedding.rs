@@ -1,6 +1,6 @@
-use crate::v1::api::Ollama;
-use crate::v1::error::APIError;
-use crate::v1::resources::ollama::embedding::{OllamaEmbeddingRequest, OllamaEmbeddingResponse};
+use crate::api::Ollama;
+use crate::error::APIError;
+use crate::resources::ollama::embedding::{OllamaEmbeddingRequest, OllamaEmbeddingResponse};
 
 impl Ollama {
     pub async fn embed(

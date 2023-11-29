@@ -1,14 +1,11 @@
 use serde::{Deserialize, Serialize};
 
-use super::chat_completion::ChatMessage;
-use crate::v1::models::PplxChatModel;
-use crate::v1::resources::pplx::chat_completion::Role;
-use crate::v1::resources::shared::FinishReason;
+use crate::models::PplxCompletionModel;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct PplxChatCompletionStreamRequest {
-    pub model: PplxChatModel,
-    pub messages: Vec<ChatMessage>,
+#[derive(Serialize, Debug, Clone)]
+pub struct PplxCompletionStreamRequest {
+    pub model: PplxCompletionModel,
+    pub prompt: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_tokens: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -26,30 +23,25 @@ pub struct PplxChatCompletionStreamRequest {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct PplxChatCompletionStreamResponse {
+pub struct PplxCompletionStreamResponse {
     pub id: String,
     pub object: String,
     pub created: u32,
     pub model: String,
-    pub choices: Vec<DeltaField>,
+    pub choices: Vec<CompletionStreamChoice>,
+    pub usage: Usage,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct DeltaField {
-    pub delta: DeltaValue,
+pub struct CompletionStreamChoice {
+    pub text: String,
     pub index: u32,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(default)]
-    pub finish_reason: Option<FinishReason>,
+    pub finish_reason: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct DeltaValue {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(default)]
-    pub role: Option<Role>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(default)]
-    pub content: Option<String>,
+pub struct Usage {
+    pub prompt_tokens: u32,
+    pub completion_tokens: u32,
+    pub total_tokens: u32,
 }
