@@ -30,12 +30,11 @@ impl Default for PplxChatCompletionRequest {
             messages: vec![ChatMessage {
                 role: Role::User,
                 content: "Hello!".to_string(),
-                name: None,
             }],
             temperature: None,
             top_p: None,
             top_k: None,
-            max_tokens: None,
+            max_tokens: Some(200),
             presence_penalty: None,
             frequency_penalty: None,
         }
@@ -46,8 +45,6 @@ impl Default for PplxChatCompletionRequest {
 pub struct ChatMessage {
     pub role: Role,
     pub content: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub name: Option<String>,
 }
 
 impl Default for ChatMessage {
@@ -55,7 +52,6 @@ impl Default for ChatMessage {
         ChatMessage {
             role: Role::User,
             content: "".to_string(),
-            name: None,
         }
     }
 }

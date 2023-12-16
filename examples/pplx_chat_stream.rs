@@ -27,12 +27,7 @@ async fn main() {
                 ..Default::default()
             },
         ],
-        temperature: None,
-        top_p: None,
-        top_k: None,
-        max_tokens: Some(1000),
-        presence_penalty: None,
-        frequency_penalty: None,
+        ..Default::default()
     };
 
     let mut stream = client.stream_chat(parameters).await.unwrap();

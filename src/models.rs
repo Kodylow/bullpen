@@ -37,8 +37,8 @@ pub enum PplxChatModel {
     Mistral7bInstruct,
     #[serde(rename = "codellama-34b-instruct")]
     Codellama34bInstruct,
-    #[serde(rename = "llama-2-13b-chat")]
-    Llama213bChat,
+    // #[serde(rename = "llama-2-13b-chat")]
+    // Llama213bChat,
     #[serde(rename = "llama-2-70b-chat")]
     Llama270bChat,
     // #[serde(rename = "openhermes-2-mistral-7b")]
@@ -53,6 +53,8 @@ pub enum PplxChatModel {
     Pplx7bOnline,
     #[serde(rename = "pplx-70b-online")]
     Pplx70bOnline,
+    #[serde(rename = "mixtral-8x7b-instruct")]
+    Mixtral8x7bInstruct,
 }
 
 impl Display for PplxChatModel {
@@ -135,14 +137,10 @@ pub enum OllamaModel {
     Zephyr,
     #[serde(rename = "wizard-math")]
     WizardMath,
-    #[serde(rename = "llama2-chinese")]
-    Llama2Chinese,
     #[serde(rename = "stable-beluga")]
     StableBeluga,
     #[serde(rename = "falcon")]
     Falcon,
-    #[serde(rename = "codeup")]
-    Codeup,
     #[serde(rename = "everythinglm")]
     Everythinglm,
     #[serde(rename = "medllama2")]
@@ -195,4 +193,22 @@ pub enum OllamaModel {
     Xwinlm,
     #[serde(rename = "alfred")]
     Alfred,
+    #[serde(rename = "dolphin-mixtral")]
+    DolphinMixtral,
+    #[serde(rename = "mixtral")]
+    Mixtral,
+    #[serde(rename = "bakllava")]
+    Bakllava,
+    #[serde(rename = "llava")]
+    Llava,
+    #[serde(rename = "stablelm-zephyr")]
+    StablelmZephyr,
+    #[serde(rename = "magicoder")]
+    Magicoder,
+    #[serde(rename = "medcoder")]
+    Medcoder,
+    #[serde(rename = "llama2-chinese")]
+    Llama2Chinese,
+    #[serde(rename = "codeup")]
+    Codeup,
 }

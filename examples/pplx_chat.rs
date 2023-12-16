@@ -25,12 +25,7 @@ async fn main() {
                 ..Default::default()
             },
         ],
-        temperature: None,
-        top_p: None,
-        top_k: None,
-        max_tokens: Some(12),
-        presence_penalty: None,
-        frequency_penalty: None,
+        ..Default::default()
     };
 
     let result = pplx.chat(parameters).await.unwrap();
