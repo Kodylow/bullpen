@@ -1,3 +1,3 @@
-pub mod chat_completion;
+pub mod chat;
 pub mod completion;
 pub mod embedding;

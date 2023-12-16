@@ -6,7 +6,7 @@ use tokio_util::bytes::Bytes;
 
 use crate::api::Modelfarm;
 use crate::error::APIError;
-use crate::resources::modelfarm::chat_completion::{
+use crate::resources::modelfarm::chat::{
     ModelfarmChatCompletionRequest, ModelfarmChatCompletionResponse,
 };
 
