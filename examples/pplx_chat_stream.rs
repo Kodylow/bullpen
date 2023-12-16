@@ -14,7 +14,7 @@ async fn main() {
     let client = Pplx::new(api_key);
 
     let parameters = PplxChatCompletionRequest {
-        model: PplxChatModel::Mistral7bInstruct,
+        model: PplxChatModel::Mixtral8x7bInstruct,
         messages: vec![
             ChatMessage {
                 role: Role::User,
