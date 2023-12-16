@@ -21,8 +21,6 @@ pub struct OllamaCompletionRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub context: Option<Vec<u32>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub stream: Option<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub raw: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_tokens: Option<u32>,
@@ -57,6 +55,28 @@ impl OllamaCompletionRequest {
             top_k: self.top_k,
             presence_penalty: self.presence_penalty,
             frequency_penalty: self.frequency_penalty,
+        }
+    }
+}
+
+impl Default for OllamaCompletionRequest {
+    fn default() -> Self {
+        Self {
+            model: OllamaModel::Llama2,
+            prompt: "".to_string(),
+            max_tokens: Some(100),
+            temperature: Some(0.2),
+            images: None,
+            format: None,
+            options: None,
+            system: None,
+            template: None,
+            context: None,
+            raw: None,
+            top_p: None,
+            top_k: None,
+            presence_penalty: None,
+            frequency_penalty: None,
         }
     }
 }

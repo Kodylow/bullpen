@@ -11,10 +11,29 @@ pub struct Parameters {
     pub max_output_tokens: Option<usize>,
 }
 
+impl Default for Parameters {
+    fn default() -> Self {
+        Parameters {
+            prompts: Vec::new(),
+            temperature: 0.8,
+            max_output_tokens: None,
+        }
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ModelfarmCompletionRequest {
     pub model: String,
     pub parameters: Parameters,
+}
+
+impl Default for ModelfarmCompletionRequest {
+    fn default() -> Self {
+        ModelfarmCompletionRequest {
+            model: String::new(),
+            parameters: Parameters::default(),
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

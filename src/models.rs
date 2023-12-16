@@ -57,6 +57,12 @@ pub enum PplxChatModel {
     Mixtral8x7bInstruct,
 }
 
+impl Default for PplxChatModel {
+    fn default() -> Self {
+        PplxChatModel::Mistral7bInstruct
+    }
+}
+
 impl Display for PplxChatModel {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(
@@ -85,6 +91,12 @@ pub enum ModelfarmChatModel {
     ChatBison,
 }
 
+impl Default for ModelfarmChatModel {
+    fn default() -> Self {
+        ModelfarmChatModel::ChatBison
+    }
+}
+
 impl Display for ModelfarmChatModel {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", serde_json::to_string(self).unwrap()).map_err(Into::into)
@@ -97,6 +109,12 @@ pub enum ModelfarmCompletionModel {
     TextBison,
 }
 
+impl Default for ModelfarmCompletionModel {
+    fn default() -> Self {
+        ModelfarmCompletionModel::TextBison
+    }
+}
+
 impl Display for ModelfarmCompletionModel {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", serde_json::to_string(self).unwrap()).map_err(Into::into)
@@ -107,6 +125,12 @@ impl Display for ModelfarmCompletionModel {
 pub enum ModelfarmEmbeddingModel {
     #[serde(rename = "textembedding-gecko")]
     TextEmbeddingGecko,
+}
+
+impl Default for ModelfarmEmbeddingModel {
+    fn default() -> Self {
+        ModelfarmEmbeddingModel::TextEmbeddingGecko
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
@@ -211,4 +235,10 @@ pub enum OllamaModel {
     Llama2Chinese,
     #[serde(rename = "codeup")]
     Codeup,
+}
+
+impl Default for OllamaModel {
+    fn default() -> Self {
+        OllamaModel::Mistral
+    }
 }

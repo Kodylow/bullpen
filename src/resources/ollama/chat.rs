@@ -26,6 +26,23 @@ pub struct OllamaChatRequest {
     pub stream: Option<bool>,
 }
 
+impl Default for OllamaChatRequest {
+    fn default() -> Self {
+        OllamaChatRequest {
+            model: OllamaModel::Mistral,
+            messages: vec![Message {
+                role: "user".to_string(),
+                content: "Hello!".to_string(),
+                images: None,
+            }],
+            format: None,
+            options: None,
+            template: None,
+            stream: None,
+        }
+    }
+}
+
 impl OllamaChatRequest {
     pub fn to_stream_request(&self) -> OllamaChatStreamRequest {
         OllamaChatStreamRequest {

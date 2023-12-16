@@ -1,6 +1,6 @@
 use bullpen::api::Modelfarm;
 use bullpen::models::ModelfarmChatModel;
-use bullpen::resources::modelfarm::chat_completion::{
+use bullpen::resources::modelfarm::chat::{
     ChatExample, ChatMessage, ChatSession, ModelfarmChatCompletionRequest, ModelfarmChatParameters,
 };
 use futures_util::stream::StreamExt;
